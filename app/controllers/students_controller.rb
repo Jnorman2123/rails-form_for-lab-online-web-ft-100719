@@ -9,7 +9,7 @@ class StudentsController < ApplicationController
     end 
 
     def create 
-        @student = Student.new(params.require(:student).permit(:first_name, :last_name))
+        @student = Student.new(student_params)
         @student.save 
         redirect_to student_path(@student)
     end 
@@ -20,11 +20,17 @@ class StudentsController < ApplicationController
 
     def update 
         @student = Student.find_by_id(params[:id])
-        @student = Student.update(params.require(:student).permit(:first_name, :last_name))
+        @student = Student.update(student_params)
         redirect_to student_path(@student)
     end 
 
     def show 
         @student = Student.find_by_id(params[:id])
+    end 
+
+    private 
+
+    def student_params
+        params.require(:student).permit(:first_name, :last_name)
     end 
 end 
